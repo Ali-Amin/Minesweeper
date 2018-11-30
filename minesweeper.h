@@ -104,6 +104,11 @@ class Minesweeper{
 					{
 						tileMineCount++;
 					}
+
+					if ((realBoard[rowIndex+1][colIndex-1] == MINE) && (colIndex!=0) && (rowIndex+1<rowDim) )
+					{
+						tileMineCount++;
+					}
 				}
 				
 				if ((realBoard[rowIndex+1][colIndex] == MINE) && (rowIndex+1<rowDim) )
@@ -117,6 +122,11 @@ class Minesweeper{
 					{
 						tileMineCount++;
 					}
+
+					if ((realBoard[rowIndex-1][colIndex+1] == MINE) && (colIndex+1<colDim) && (rowIndex!=0) )
+					{
+						tileMineCount++;
+					}
 				}
 				
 				if ((realBoard[rowIndex+1][colIndex+1] == MINE) && (colIndex+1<colDim) && (rowIndex+1<rowDim) )
@@ -124,21 +134,7 @@ class Minesweeper{
 					tileMineCount++;
 				}
 				
-				if (colIndex!=0)
-				{
-					if ((realBoard[rowIndex+1][colIndex-1] == MINE) && (colIndex!=0) && (rowIndex+1<rowDim) )
-					{
-						tileMineCount++;
-					}
-				}
-				
-				if (rowIndex!=0)
-				{
-					if ((realBoard[rowIndex-1][colIndex+1] == MINE) && (colIndex+1<colDim) && (rowIndex!=0) )
-					{
-						tileMineCount++;
-					}
-				}
+
 				
 				if (rowIndex!=0 && colIndex!=0)
 				{
