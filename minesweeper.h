@@ -15,10 +15,9 @@ class Minesweeper{
 	u8 gameOver ;
 	u8 gameWon;
 	u8 clearedTiles;
-	
-	u32 cells;
 	u32 xCor,yCor;
-
+	u32 cells;
+	
     u32 realBoard[4][4];
 	u32 UIBoard[4][4];
 
@@ -33,11 +32,11 @@ class Minesweeper{
 			  
 		switch(firstMove)
 		{
-			case 0:break;
+			default: break;
 			
-			case 1: minesInit();
+			case '1': minesInit();
 					numbersInit();
-					firstMove = 0;
+					firstMove = '0';
 					break;
 							
 		}
@@ -70,8 +69,10 @@ class Minesweeper{
 	/*
 	[x][y+1] (RIGHT)
 	[x][y-1] (LEFT)
+
 	[x+1][y] (TOP)
 	[x-1][y] (BOT)
+
 	[x+1][y+1] (BOT RIGHT)
 	[x+1][y-1] (BOT LEFT)
 	[x-1][y+1] (TOP RIGHT)
@@ -167,7 +168,7 @@ class Minesweeper{
 
   public:
 	/* Constructor */
-    minesweeper()
+    Minesweeper()
     {
 		mines = '2';
 		firstMove = '1';
@@ -192,7 +193,7 @@ class Minesweeper{
 			}
 			else 
 			{
-				gameOver = 1;
+				gameOver = '1';
 				std::cout<<"MINE: "<<realBoard[xCor][yCor]<<std::endl;
 			}
 		}
