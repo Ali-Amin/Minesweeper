@@ -10,15 +10,16 @@ enum {
 class Minesweeper{
 	
   private:
-    u8 mines;
 	u8 firstMove;
 	u8 gameOver ;
 	u8 gameWon;
 	u8 clearedTiles;
+
 	u32 row,col;
 	u32 cells;
 	u32 rowDim, colDim;
-	
+    u32 mines;
+
     u32** realBoard;
 	u32** UIBoard;
 
@@ -49,7 +50,7 @@ class Minesweeper{
       //player should make a first move before calling this method
       u32 mine_row;
 	  u32 mine_col;
-	  u8 counter = '0';
+	  u32 counter = 0;
 	  
       //srand(time(NULL));
       while(counter < mines)
@@ -156,13 +157,13 @@ class Minesweeper{
 	/* Constructor */
     Minesweeper(u32 rowSize, u32 colSize)
     {
-		mines = '2';
+		mines = 2;
 		firstMove = '1';
 		gameOver = '0';
 		gameWon = '0';
 		clearedTiles = '0';
 		
-		cells = 16;
+		cells = rowSize*colSize;
 
 		rowDim = rowSize;
 		colDim = colSize;
