@@ -17,9 +17,10 @@ class Minesweeper{
 	u8 clearedTiles;
 	u32 xCor,yCor;
 	u32 cells;
+	u32 xDim, yDim;
 	
-    u32 realBoard[4][4];
-	u32 UIBoard[4][4];
+    u32** realBoard;
+	u32** UIBoard;
 
 	
     void makeMove()
@@ -53,8 +54,8 @@ class Minesweeper{
       //srand(time(NULL));
       while(counter < mines)
       {
-        mine_x = rand() %4;
-        mine_y = rand() %4;
+        mine_x = rand() %xDim;
+        mine_y = rand() %yDim;
         if(realBoard[mine_x][mine_y] != MINE && !(mine_x == xCor && mine_y == yCor))
         {
           realBoard[mine_x][mine_y] = MINE;
@@ -80,12 +81,12 @@ class Minesweeper{
 	*/
     void numbersInit()
     {
-
-		for (u32 x = 0; x<4; x++)
+		u32 tileMineCount;
+		for (u32 x = 0; x<xDim; x++)
 		{
-			for (u32 y = 0; y<4; y++)
+			for (u32 y = 0; y<yDim; y++)
 			{
-				u32 tileMineCount = 0;
+				tileMineCount = 0;
 
 				if (realBoard[x][y] == MINE)
 				{
@@ -93,7 +94,7 @@ class Minesweeper{
 					continue;
 				}
 					
-				if ((realBoard[x][y+1] == MINE) && (y+1<4) )
+				if ((realBoard[x][y+1] == MINE) && (y+1<yDim) )
 				{
 					tileMineCount++;
 					std::cout<<"point 2"<<std::endl;
@@ -108,7 +109,7 @@ class Minesweeper{
 					}
 				}
 				
-				if ((realBoard[x+1][y] == MINE) && (x+1<4) )
+				if ((realBoard[x+1][y] == MINE) && (x+1<xDim) )
 				{
 					tileMineCount++;
 					std::cout<<"point 4"<<std::endl;				
@@ -123,7 +124,7 @@ class Minesweeper{
 					}
 				}
 				
-				if ((realBoard[x+1][y+1] == MINE) && (y+1<4) && (x+1<4) )
+				if ((realBoard[x+1][y+1] == MINE) && (y+1<yDim) && (x+1<xDim) )
 				{
 					tileMineCount++;
 					std::cout<<"point 6"<<std::endl;					
@@ -131,7 +132,7 @@ class Minesweeper{
 				
 				if (y!=0)
 				{
-					if ((realBoard[x+1][y-1] == MINE) && (y!=0) && (x+1<4) )
+					if ((realBoard[x+1][y-1] == MINE) && (y!=0) && (x+1<xDim) )
 					{
 						tileMineCount++;
 						std::cout<<"point 7"<<std::endl;					
@@ -140,7 +141,7 @@ class Minesweeper{
 				
 				if (x!=0)
 				{
-					if ((realBoard[x-1][y+1] == MINE) && (y+1<4) && (x!=0) )
+					if ((realBoard[x-1][y+1] == MINE) && (y+1<yDim) && (x!=0) )
 					{
 						tileMineCount++;
 						std::cout<<"point 8"<<std::endl;					
@@ -168,7 +169,7 @@ class Minesweeper{
 
   public:
 	/* Constructor */
-    Minesweeper()
+    Minesweeper(u32 xSize, u32 ySize)
     {
 		mines = '2';
 		firstMove = '1';
@@ -177,7 +178,16 @@ class Minesweeper{
 		clearedTiles = '0';
 		
 		cells = 16;
-		
+
+		yDim = ySize;
+		xDim = xSize;
+		realBoard = new u32*[xSize];
+		UIBoard = new u32*[xSize];
+		for(u32 i = 0; i < xSize+1; i++)
+		{
+    		realBoard[i] = new u32[ySize];
+			UIBoard[i] = new u32[ySize];
+		}
     }
 	
 

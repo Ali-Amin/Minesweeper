@@ -11,6 +11,6 @@ int main(void)
 
 void playGame(void)
 {
-	Minesweeper game;
+	Minesweeper game = Minesweeper(4,4);
 	game.selectTile();
 }
