@@ -7,7 +7,7 @@ enum {
 	MINE = 99,
 };
 
-class minesweeper{
+class Minesweeper{
 	
   private:
     u32 mines;
