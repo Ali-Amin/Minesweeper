@@ -1,0 +1,19 @@
+# Miscellaneous
+*.class
+*.lock
+*.log
+*.pyc
+*.swp
+*.exe
+*.chp
+.DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
+
+
+# Visual Studio Code related
+.vscode/
+
+
