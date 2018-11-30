@@ -179,12 +179,13 @@ class Minesweeper{
 		}
     }
 	
-
+	
 	void selectTile()
 	{
 		while( (gameOver == '0') )
 		{
 			makeMove();
+			reInitDisplay();
 			if (realBoard[xCor][yCor] != MINE)
 			{
 				UIBoard[xCor][yCor] = realBoard[xCor][yCor];
@@ -195,6 +196,18 @@ class Minesweeper{
 				gameOver = '1';
 				std::cout<<"MINE! you loose"<<std::endl;
 			}
+		}
+	}
+
+	void reInitDisplay()
+	{
+		for(u32 x = 0; x < xDim; x++)
+		{
+			for(u32 y = 0; y < yDim; y++)
+			{
+				std::cout<<realBoard[x][y]<<" ";
+			}
+			std::cout<<std::endl;
 		}
 	}
 	
