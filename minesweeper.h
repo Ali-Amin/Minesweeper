@@ -15,9 +15,9 @@ class Minesweeper{
 	u8 gameOver ;
 	u8 gameWon;
 	u8 clearedTiles;
-	u32 xCor,yCor;
+	u32 row,col;
 	u32 cells;
-	u32 xDim, yDim;
+	u32 rowDim, colDim;
 	
     u32** realBoard;
 	u32** UIBoard;
@@ -26,10 +26,10 @@ class Minesweeper{
     void makeMove()
     {
 		//asks user for x and y cor of the next move		
-		std::cout << "enter x: ";
-		std::cin >> xCor;
-		std::cout << "enter y: ";
-		std::cin >> yCor;
+		std::cout << "enter row: ";
+		std::cin >> row;
+		std::cout << "enter column: ";
+		std::cin >> col;
 			  
 		switch(firstMove)
 		{
@@ -47,22 +47,22 @@ class Minesweeper{
     {
       //Mine locations random generation
       //player should make a first move before calling this method
-      u32 mine_x;
-	  u32 mine_y;
+      u32 mine_row;
+	  u32 mine_col;
 	  u8 counter = '0';
 	  
       //srand(time(NULL));
       while(counter < mines)
       {
-        mine_x = rand() %xDim;
-        mine_y = rand() %yDim;
-        if(realBoard[mine_x][mine_y] != MINE && !(mine_x == xCor && mine_y == yCor))
+        mine_row = rand() %rowDim;
+        mine_col = rand() %colDim;
+        if(realBoard[mine_row][mine_col] != MINE && !(mine_row == row && mine_col == col))
         {
-          realBoard[mine_x][mine_y] = MINE;
+          realBoard[mine_row][mine_col] = MINE;
           counter++;
         }
-		std::cout<<"mine: ("<<mine_x<<",";
-		std::cout<<mine_y<<")"<<std::endl;
+		std::cout<<"mine: ("<<mine_row<<",";
+		std::cout<<mine_col<<")"<<std::endl;
 		
       }
     }
@@ -82,73 +82,73 @@ class Minesweeper{
     void numbersInit()
     {
 		u32 tileMineCount;
-		for (u32 x = 0; x<xDim; x++)
+		for (u32 rowIndex = 0; rowIndex<rowDim; rowIndex++)
 		{
-			for (u32 y = 0; y<yDim; y++)
+			for (u32 colIndex = 0; colIndex<colDim; colIndex++)
 			{
 				tileMineCount = 0;
 
-				if (realBoard[x][y] == MINE)
+				if (realBoard[rowIndex][colIndex] == MINE)
 				{
 					continue;
 				}
 					
-				if ((realBoard[x][y+1] == MINE) && (y+1<yDim) )
+				if ((realBoard[rowIndex][colIndex+1] == MINE) && (colIndex+1<colDim) )
 				{
 					tileMineCount++;
 				}
 				
-				if (y!=0)
+				if (colIndex!=0)
 				{	
-					if (realBoard[x][y-1] == MINE)
+					if (realBoard[rowIndex][colIndex-1] == MINE)
 					{
 						tileMineCount++;
 					}
 				}
 				
-				if ((realBoard[x+1][y] == MINE) && (x+1<xDim) )
+				if ((realBoard[rowIndex+1][colIndex] == MINE) && (rowIndex+1<rowDim) )
 				{
 					tileMineCount++;
 				}
 				
-				if (x!=0)
+				if (rowIndex!=0)
 				{		
-					if ((realBoard[x-1][y] == MINE) && (x!=0) )
+					if ((realBoard[rowIndex-1][colIndex] == MINE) && (rowIndex!=0) )
 					{
 						tileMineCount++;
 					}
 				}
 				
-				if ((realBoard[x+1][y+1] == MINE) && (y+1<yDim) && (x+1<xDim) )
+				if ((realBoard[rowIndex+1][colIndex+1] == MINE) && (colIndex+1<colDim) && (rowIndex+1<rowDim) )
 				{
 					tileMineCount++;
 				}
 				
-				if (y!=0)
+				if (colIndex!=0)
 				{
-					if ((realBoard[x+1][y-1] == MINE) && (y!=0) && (x+1<xDim) )
+					if ((realBoard[rowIndex+1][colIndex-1] == MINE) && (colIndex!=0) && (rowIndex+1<rowDim) )
 					{
 						tileMineCount++;
 					}
 				}
 				
-				if (x!=0)
+				if (rowIndex!=0)
 				{
-					if ((realBoard[x-1][y+1] == MINE) && (y+1<yDim) && (x!=0) )
+					if ((realBoard[rowIndex-1][colIndex+1] == MINE) && (colIndex+1<colDim) && (rowIndex!=0) )
 					{
 						tileMineCount++;
 					}
 				}
 				
-				if (x!=0 && y!=0)
+				if (rowIndex!=0 && colIndex!=0)
 				{
-					if ((realBoard[x-1][y-1] == MINE) && (y!=0) && (x!=0) )
+					if ((realBoard[rowIndex-1][colIndex-1] == MINE) && (colIndex!=0) && (rowIndex!=0) )
 					{
 						tileMineCount++;
 					}
 				}
-				realBoard[x][y] = tileMineCount;
-				std::cout<<"coords: ("<<x<<","<<y<<")";
+				realBoard[rowIndex][colIndex] = tileMineCount;
+				std::cout<<"coords: ("<<rowIndex<<","<<colIndex<<")";
 				std::cout<<": Surrounding Mines: "<<tileMineCount<<std::endl;
 			}
 		}
@@ -158,7 +158,7 @@ class Minesweeper{
 
   public:
 	/* Constructor */
-    Minesweeper(u32 xSize, u32 ySize)
+    Minesweeper(u32 rowSize, u32 colSize)
     {
 		mines = '2';
 		firstMove = '1';
@@ -168,14 +168,14 @@ class Minesweeper{
 		
 		cells = 16;
 
-		yDim = ySize;
-		xDim = xSize;
-		realBoard = new u32*[xSize];
-		UIBoard = new u32*[xSize];
-		for(u32 i = 0; i < xSize+1; i++)
+		rowDim = rowSize;
+		colDim = colSize;
+		realBoard = new u32*[rowSize];
+		UIBoard = new u32*[rowSize];
+		for(u32 i = 0; i < rowSize+1; i++)
 		{
-    		realBoard[i] = new u32[ySize];
-			UIBoard[i] = new u32[ySize];
+    		realBoard[i] = new u32[colSize];
+			UIBoard[i] = new u32[colSize];
 		}
     }
 	
@@ -186,10 +186,10 @@ class Minesweeper{
 		{
 			makeMove();
 			reInitDisplay();
-			if (realBoard[xCor][yCor] != MINE)
+			if (realBoard[row][col] != MINE)
 			{
-				UIBoard[xCor][yCor] = realBoard[xCor][yCor];
-				std::cout<<realBoard[xCor][yCor]<<std::endl;
+				UIBoard[row][col] = realBoard[row][col];
+				std::cout<<realBoard[row][col]<<std::endl;
 			}
 			else 
 			{
@@ -201,11 +201,11 @@ class Minesweeper{
 
 	void reInitDisplay()
 	{
-		for(u32 x = 0; x < xDim; x++)
+		for(u32 rowIndex = 0; rowIndex < rowDim; rowIndex++)
 		{
-			for(u32 y = 0; y < yDim; y++)
+			for(u32 colIndex = 0; colIndex < colDim; colIndex++)
 			{
-				std::cout<<realBoard[x][y]<<" ";
+				std::cout<<realBoard[rowIndex][colIndex]<<" ";
 			}
 			std::cout<<std::endl;
 		}
