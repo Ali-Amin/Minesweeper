@@ -90,14 +90,12 @@ class Minesweeper{
 
 				if (realBoard[x][y] == MINE)
 				{
-					std::cout<<"point 1"<<std::endl;
 					continue;
 				}
 					
 				if ((realBoard[x][y+1] == MINE) && (y+1<yDim) )
 				{
 					tileMineCount++;
-					std::cout<<"point 2"<<std::endl;
 				}
 				
 				if (y!=0)
@@ -105,14 +103,12 @@ class Minesweeper{
 					if (realBoard[x][y-1] == MINE)
 					{
 						tileMineCount++;
-						std::cout<<"point 3"<<std::endl;
 					}
 				}
 				
 				if ((realBoard[x+1][y] == MINE) && (x+1<xDim) )
 				{
 					tileMineCount++;
-					std::cout<<"point 4"<<std::endl;				
 				}
 				
 				if (x!=0)
@@ -120,14 +116,12 @@ class Minesweeper{
 					if ((realBoard[x-1][y] == MINE) && (x!=0) )
 					{
 						tileMineCount++;
-						std::cout<<"point 5"<<std::endl;				
 					}
 				}
 				
 				if ((realBoard[x+1][y+1] == MINE) && (y+1<yDim) && (x+1<xDim) )
 				{
 					tileMineCount++;
-					std::cout<<"point 6"<<std::endl;					
 				}
 				
 				if (y!=0)
@@ -135,7 +129,6 @@ class Minesweeper{
 					if ((realBoard[x+1][y-1] == MINE) && (y!=0) && (x+1<xDim) )
 					{
 						tileMineCount++;
-						std::cout<<"point 7"<<std::endl;					
 					}
 				}
 				
@@ -144,7 +137,6 @@ class Minesweeper{
 					if ((realBoard[x-1][y+1] == MINE) && (y+1<yDim) && (x!=0) )
 					{
 						tileMineCount++;
-						std::cout<<"point 8"<<std::endl;					
 					}
 				}
 				
@@ -153,14 +145,11 @@ class Minesweeper{
 					if ((realBoard[x-1][y-1] == MINE) && (y!=0) && (x!=0) )
 					{
 						tileMineCount++;
-						std::cout<<"point 9"<<std::endl;					
 					}
 				}
-				
-				std::cout<<"point 10"<<std::endl;
-				std::cout<<"coords: ("<<x<<",";
-				std::cout<<y<<")";
-				std::cout<<": mineNumber: "<<tileMineCount<<std::endl;
+				realBoard[x][y] = tileMineCount;
+				std::cout<<"coords: ("<<x<<","<<y<<")";
+				std::cout<<": Surrounding Mines: "<<tileMineCount<<std::endl;
 			}
 		}
 	}
@@ -204,7 +193,7 @@ class Minesweeper{
 			else 
 			{
 				gameOver = '1';
-				std::cout<<"MINE: "<<realBoard[xCor][yCor]<<std::endl;
+				std::cout<<"MINE! you loose"<<std::endl;
 			}
 		}
 	}
