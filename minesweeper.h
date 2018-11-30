@@ -10,15 +10,15 @@ enum {
 class Minesweeper{
 	
   private:
-    u32 mines;
-	u32 xCor,yCor;
-	u32 firstMove;
-	u32 gameOver ;
-	u32 gameWon;
-	u32 clearedTiles;
+    u8 mines;
+	u8 firstMove;
+	u8 gameOver ;
+	u8 gameWon;
+	u8 clearedTiles;
 	
 	u32 cells;
-	
+	u32 xCor,yCor;
+
     u32 realBoard[4][4];
 	u32 UIBoard[4][4];
 
@@ -49,7 +49,7 @@ class Minesweeper{
       //player should make a first move before calling this method
       u32 mine_x;
 	  u32 mine_y;
-	  u32 counter = 0;
+	  u8 counter = '0';
 	  
       //srand(time(NULL));
       while(counter < mines)
@@ -70,10 +70,8 @@ class Minesweeper{
 	/*
 	[x][y+1] (RIGHT)
 	[x][y-1] (LEFT)
-
 	[x+1][y] (TOP)
 	[x-1][y] (BOT)
-
 	[x+1][y+1] (BOT RIGHT)
 	[x+1][y-1] (BOT LEFT)
 	[x-1][y+1] (TOP RIGHT)
@@ -171,11 +169,11 @@ class Minesweeper{
 	/* Constructor */
     minesweeper()
     {
-		mines = 2;
-		firstMove = 1;
-		gameOver = 0;
-		gameWon = 0;
-		clearedTiles = 0;
+		mines = '2';
+		firstMove = '1';
+		gameOver = '0';
+		gameWon = '0';
+		clearedTiles = '0';
 		
 		cells = 16;
 		
@@ -184,10 +182,10 @@ class Minesweeper{
 
 	void selectTile()
 	{
-		while( (gameOver == 0) )
+		while( (gameOver == '0') )
 		{
 			makeMove();
-			if (realBoard[xCor][yCor] != 99)
+			if (realBoard[xCor][yCor] != MINE)
 			{
 				UIBoard[xCor][yCor] = realBoard[xCor][yCor];
 				std::cout<<realBoard[xCor][yCor]<<std::endl;
