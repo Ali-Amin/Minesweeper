@@ -47,7 +47,6 @@ class Minesweeper{
     {
       //Mine locations random generation
       //player should make a first move before calling this method
-      mines = 2;
       u32 mine_x;
 	  u32 mine_y;
 	  u32 counter = 0;
