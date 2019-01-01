@@ -35,16 +35,20 @@ class Minesweeper{
 		std::cout << "Select Column: ";
 		std::cin >> col;
 
+		/* Decrement input to accomodate array index starting at 0 */
 		row--;
 		col--;
 
+		/* Check if input is in bounds */
 		if  ((row >= rowDim) || (col >= colDim))
 		{
 			std::cout << "Input is out of bounds";
+			/* Repeat input prompt until valid input */
 			makeMove();
 			return;
 		}
 
+		/* if first move initialize game matrix */
 		switch(firstMove)
 		{
 			default: break;
@@ -79,6 +83,7 @@ class Minesweeper{
     }
 	
 	/*
+	BRUTE FORCE
 	[x][y+1] (RIGHT)
 	[x][y-1] (LEFT)
 
@@ -159,6 +164,7 @@ class Minesweeper{
 		}
 	}
 
+	/* Initialize all elements of UIBoard as Hidden */
 	void initUIBoard() {
 		for (u32 i = 0; i < rowDim; i++) {
 			for (u32 j = 0; j < colDim; j++) {
@@ -185,6 +191,7 @@ class Minesweeper{
 		realBoard = new u32*[rowSize];
 		UIBoard = new u32*[rowSize];
 
+		/* Function in size of game matrix to calculate appropriate number of mines */
 		mines = (rowSize*colSize)/(sqrt(rowSize*colSize) - 1);
 
 		for(u32 i = 0; i < rowSize+1; i++)
@@ -192,9 +199,14 @@ class Minesweeper{
     		realBoard[i] = new u32[colSize];
 			UIBoard[i] = new u32[colSize];
 		}
+		/*Clears display */
 		system ("CLS");
+		/*Prints Title*/
 		msWelcome();
+		
 		initUIBoard();
+
+		/* Re display the Game Matrix */
 		reInitDisplay();
     }
 	
@@ -209,17 +221,20 @@ class Minesweeper{
 
 			if (realBoard[row][col] != MINE)
 			{
+				/* Count number of cleared mines to know when the user has won */
 				if (UIBoard[row][col] == HIDDEN)
 				{
 					clearedTiles++;
 				}
-
+				/* Get value of selected coordinate in realBoard */
 				UIBoard[row][col] = realBoard[row][col];
 				
 				msWelcome();
 				/* To display realBoard for debugging purposes, comment reInitDisplay() and uncomment reInitDisplay() */
 				reInitDisplay();
 				//debug();
+
+				/* If all tiles are cleared, inform user of successfully winning */
 				if (clearedTiles == rowDim*colDim - mines)
 				{
 					msWelcome();
@@ -230,6 +245,8 @@ class Minesweeper{
 					return;
 				}
 			}
+
+			/* The user has selected on a mine tile */
 			else 
 			{
 				msWelcome();
@@ -251,10 +268,13 @@ class Minesweeper{
 		{
 			for(u32 colIndex = 0; colIndex < colDim; colIndex++)
 			{
+				/* If current tile is hidden print X */
 				if (UIBoard[rowIndex][colIndex] == HIDDEN)
 					std::cout<<"X"<<" "<<std::flush;
+				/* If current tile is a mine print M*/
 				else if (UIBoard[rowIndex][colIndex] == MINE)
 					std::cout<<"M"<<" "<<std::flush;
+				/* If current tile is cleared print its corresponding number */
 				else
 					std::cout<<UIBoard[rowIndex][colIndex]<<" "<<std::flush;
 			}
@@ -262,6 +282,7 @@ class Minesweeper{
 		}
 	}
 
+	/* Use this instead of reInitDisplay() to display realBoard instead of UIBoard */
 	void debug()
 	{
 		for(u32 rowIndex = 0; rowIndex < rowDim; rowIndex++)
@@ -274,6 +295,7 @@ class Minesweeper{
 		}
 	}	
 
+	/* Prints title message art */
 	void msWelcome(void)
 	{
 	    std::string line;
