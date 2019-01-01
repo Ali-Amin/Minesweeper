@@ -31,7 +31,17 @@ class Minesweeper{
 		std::cin >> row;
 		std::cout << "enter column: ";
 		std::cin >> col;
-			  
+
+		row--;
+		col--;
+
+		if (row > rowDim || col > colDim)
+		{
+			std::cout << "Input is out of bounds";
+			makeMove();
+			return;
+		}
+
 		switch(firstMove)
 		{
 			default: break;
