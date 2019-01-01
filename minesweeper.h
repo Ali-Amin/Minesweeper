@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <ctime>
 #include "types.h"
+#include <math.h> 
 
 enum {
 	MINE = 99,
@@ -14,8 +15,8 @@ class Minesweeper{
 	u8 firstMove;
 	u8 gameOver ;
 	u8 gameWon;
-	u8 clearedTiles;
 
+	u32 clearedTiles;
 	u32 row,col;
 	u32 cells;
 	u32 rowDim, colDim;
@@ -36,7 +37,7 @@ class Minesweeper{
 		row--;
 		col--;
 
-		if (row > rowDim || col > colDim)
+		if  ((row >= rowDim) || (col >= colDim))
 		{
 			std::cout << "Input is out of bounds";
 			makeMove();
@@ -176,11 +177,10 @@ class Minesweeper{
 	/* Constructor */
     Minesweeper(u32 rowSize, u32 colSize)
     {
-		mines = 2;
 		firstMove = '1';
 		gameOver = '0';
 		gameWon = '0';
-		clearedTiles = '0';
+		clearedTiles = 0;
 		
 		cells = rowSize*colSize;
 
@@ -188,6 +188,9 @@ class Minesweeper{
 		colDim = colSize;
 		realBoard = new u32*[rowSize];
 		UIBoard = new u32*[rowSize];
+
+		mines = (rowSize*colSize)/(sqrt(rowSize*colSize) - 1);
+
 		for(u32 i = 0; i < rowSize+1; i++)
 		{
     		realBoard[i] = new u32[colSize];
@@ -204,11 +207,23 @@ class Minesweeper{
 			makeMove();
 			std::cout<<std::endl<<std::endl;
 			system ("CLS");
-			reInitDisplay();
 			if (realBoard[row][col] != MINE)
 			{
+				if (UIBoard[row][col] == HIDDEN)
+				{
+					clearedTiles++;
+				}
+
 				UIBoard[row][col] = (u8) realBoard[row][col];
-				std::cout<<realBoard[row][col]<<std::endl<<std::flush;
+				
+				/* To display realBoard for debugging purposes, comment reInitDisplay() and uncomment reInitDisplay() */
+				reInitDisplay();
+				//debug();
+				if (clearedTiles == rowDim*colDim - mines)
+				{
+					std::cout<<"YOU WIN!"<<std::endl;
+					return;
+				}
 			}
 			else 
 			{
@@ -232,6 +247,17 @@ class Minesweeper{
 			std::cout<<std::endl;
 		}
 	}
-	
+
+	void debug()
+	{
+		for(u32 rowIndex = 0; rowIndex < rowDim; rowIndex++)
+		{
+			for(u32 colIndex = 0; colIndex < colDim; colIndex++)
+			{
+				std::cout<<realBoard[rowIndex][colIndex]<<" "<<std::flush;
+			}
+			std::cout<<std::endl;
+		}
+	}	
 
 };
