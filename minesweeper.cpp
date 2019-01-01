@@ -1,6 +1,6 @@
 #include "types.h"
 #include "minesweeper.h"
-#include <fstream>
+#include "display_welcome.cpp"
 #include <stdlib.h>
 #include <iostream>
 #include <string>
@@ -9,6 +9,7 @@ void playGame(void);
 
 int main(void)
 {
+    welcome();
 	playGame();
 	return 0;
 }
