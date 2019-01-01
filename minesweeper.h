@@ -5,6 +5,7 @@
 
 enum {
 	MINE = 99,
+	HIDDEN = 100,
 };
 
 class Minesweeper{
@@ -27,9 +28,9 @@ class Minesweeper{
     void makeMove()
     {
 		//asks user for x and y cor of the next move		
-		std::cout << "enter row: ";
+		std::cout << "\nSelect Row: ";
 		std::cin >> row;
-		std::cout << "enter column: ";
+		std::cout << "Select Column: ";
 		std::cin >> col;
 
 		row--;
@@ -160,6 +161,14 @@ class Minesweeper{
 			}
 		}
 	}
+
+	void initUIBoard() {
+		for (u32 i = 0; i < rowDim; i++) {
+			for (u32 j = 0; j < colDim; j++) {
+				UIBoard[i][j] = HIDDEN;
+			}
+		}
+	}
 	
 	
 
@@ -184,6 +193,7 @@ class Minesweeper{
     		realBoard[i] = new u32[colSize];
 			UIBoard[i] = new u32[colSize];
 		}
+		initUIBoard();
     }
 	
 	
@@ -192,11 +202,13 @@ class Minesweeper{
 		while( (gameOver == '0') )
 		{
 			makeMove();
+			std::cout<<std::endl<<std::endl;
+			system ("CLS");
 			reInitDisplay();
 			if (realBoard[row][col] != MINE)
 			{
-				UIBoard[row][col] = realBoard[row][col];
-				std::cout<<realBoard[row][col]<<std::endl;
+				UIBoard[row][col] = (u8) realBoard[row][col];
+				std::cout<<realBoard[row][col]<<std::endl<<std::flush;
 			}
 			else 
 			{
@@ -212,7 +224,10 @@ class Minesweeper{
 		{
 			for(u32 colIndex = 0; colIndex < colDim; colIndex++)
 			{
-				std::cout<<realBoard[rowIndex][colIndex]<<" ";
+				if (UIBoard[rowIndex][colIndex] == HIDDEN)
+					std::cout<<"X"<<" "<<std::flush;
+				else
+					std::cout<<UIBoard[rowIndex][colIndex]<<" "<<std::flush;
 			}
 			std::cout<<std::endl;
 		}
