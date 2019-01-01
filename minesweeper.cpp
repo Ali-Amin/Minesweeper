@@ -6,11 +6,9 @@
 #include <string>
 
 void playGame(void);
-void welcome(void);
 
 int main(void)
 {
-	welcome();
 	playGame();
 	return 0;
 }
@@ -25,20 +23,4 @@ void playGame(void)
 
 	Minesweeper game = Minesweeper(rowSize,colSize);
 	game.selectTile();
-}
-
-void welcome(void)
-{
-    std::string line;
-    std::ifstream inFile("welcome_art.txt");
-    if(!inFile.is_open())
-    {
-        std::cerr << "cant open file";
-        exit(0);
-    }
-    while(std::getline(inFile,line))
-    {
-        std::cout << line << std::endl;
-    }
-    inFile.close();
 }
