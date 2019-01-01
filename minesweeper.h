@@ -75,9 +75,6 @@ class Minesweeper{
           realBoard[mine_row][mine_col] = MINE;
           counter++;
         }
-		std::cout<<"mine: ("<<mine_row<<",";
-		std::cout<<mine_col<<")"<<std::endl;
-		
       }
     }
 	
@@ -158,8 +155,6 @@ class Minesweeper{
 					}
 				}
 				realBoard[rowIndex][colIndex] = tileMineCount;
-				//std::cout<<"coords: ("<<rowIndex<<","<<colIndex<<")";
-				//std::cout<<": Surrounding Mines: "<<tileMineCount<<std::endl;
 			}
 		}
 	}
@@ -211,6 +206,7 @@ class Minesweeper{
 			makeMove();
 			std::cout<<std::endl<<std::endl;
 			system ("CLS");
+
 			if (realBoard[row][col] != MINE)
 			{
 				if (UIBoard[row][col] == HIDDEN)
@@ -218,7 +214,7 @@ class Minesweeper{
 					clearedTiles++;
 				}
 
-				UIBoard[row][col] = (u8) realBoard[row][col];
+				UIBoard[row][col] = realBoard[row][col];
 				
 				msWelcome();
 				/* To display realBoard for debugging purposes, comment reInitDisplay() and uncomment reInitDisplay() */
@@ -226,15 +222,26 @@ class Minesweeper{
 				//debug();
 				if (clearedTiles == rowDim*colDim - mines)
 				{
+					msWelcome();
+					/* To display realBoard for debugging purposes, comment reInitDisplay() and uncomment reInitDisplay() */
+					reInitDisplay();
+					//debug();
 					std::cout<<"YOU WIN!"<<std::endl;
 					return;
 				}
 			}
 			else 
 			{
+				msWelcome();
+				UIBoard[row][col] = realBoard[row][col];
+				/* To display realBoard for debugging purposes, comment reInitDisplay() and uncomment reInitDisplay() */
+				reInitDisplay();
+				//debug();
 				gameOver = '1';
-				std::cout<<"MINE! you loose"<<std::endl;
+				std::cout<<"MINE! you loose"<<std::endl<<std::flush;
+				
 			}
+
 		}
 	}
 
@@ -246,6 +253,8 @@ class Minesweeper{
 			{
 				if (UIBoard[rowIndex][colIndex] == HIDDEN)
 					std::cout<<"X"<<" "<<std::flush;
+				else if (UIBoard[rowIndex][colIndex] == MINE)
+					std::cout<<"M"<<" "<<std::flush;
 				else
 					std::cout<<UIBoard[rowIndex][colIndex]<<" "<<std::flush;
 			}
@@ -268,7 +277,7 @@ class Minesweeper{
 	void msWelcome(void)
 	{
 	    std::string line;
-	    std::ifstream inFile("welcome_start.txt");
+	    std::ifstream inFile("minesweeper_art.txt");
 	    if(!inFile.is_open())
 	    {
 	        std::cerr << "cant open file";
