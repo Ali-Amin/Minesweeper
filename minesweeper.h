@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <ctime>
 #include "types.h"
+#include "display_welcome.cpp"
 #include <math.h> 
 
 enum {
@@ -196,7 +197,9 @@ class Minesweeper{
     		realBoard[i] = new u32[colSize];
 			UIBoard[i] = new u32[colSize];
 		}
+		welcome();
 		initUIBoard();
+		reInitDisplay();
     }
 	
 	
@@ -216,6 +219,7 @@ class Minesweeper{
 
 				UIBoard[row][col] = (u8) realBoard[row][col];
 				
+				welcome();
 				/* To display realBoard for debugging purposes, comment reInitDisplay() and uncomment reInitDisplay() */
 				reInitDisplay();
 				//debug();
