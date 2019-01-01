@@ -1,3 +1,5 @@
+#ifndef _WELCOME_CPP
+#define _WELCOMEC_CPP
 #include <fstream>
 #include <iostream>
 
@@ -18,3 +20,5 @@ void welcome(void)
     }
     inFile.close();
 }
+
+#endif
